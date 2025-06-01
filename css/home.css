@@ -1,0 +1,342 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-height: 400px;
+    transform: translateY(0);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+.door-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    pointer-events: none;
+}
+
+.door {
+    width: 50%;
+    height: 100%;
+    background-color: #2c3e50;
+    transition: transform 1.5s ease-in-out;
+    opacity: 0;
+}
+
+.left-door {
+    transform-origin: left;
+}
+
+.right-door {
+    transform-origin: right;
+}
+
+.door.open.left-door {
+    transform: perspective(1200px) rotateY(110deg);
+    opacity: 1;
+}
+
+.door.open.right-door {
+    transform: perspective(1200px) rotateY(-110deg);
+    opacity: 1;
+}
+
+.form-container {
+    padding: 50px 30px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #7f8c8d;
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+/* Add to your existing home.css */
+
+.code-input {
+    margin-bottom: 30px;
+    position: relative;
+}
+/* Updating the paste button to be completely invisible */
+.paste-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: transparent;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+}
+
+.code-input:hover .paste-btn,
+.code-input:focus-within .paste-btn {
+    opacity: 0;
+}
+
+.paste-btn:hover {
+    background-color: transparent;
+    color: transparent;
+    opacity: 0;
+}
+/* Add dialog styles */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+.dialog-content {
+    background-color: #1e1e2e;
+    border-radius: 15px;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dialog-content h3 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.dialog-content p {
+    color: #a0a0a0;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.dialog-code {
+    font-family: 'Courier New', monospace;
+    font-size: 22px;
+    letter-spacing: 5px;
+    color: #3498db;
+    background-color: #2a2a3a;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #3a3a4a;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.dialog-buttons button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#confirmYes {
+    background: linear-gradient(to right, #3498db, #2980b9);
+    color: white;
+    border: none;
+}
+
+#confirmYes:hover {
+    background: linear-gradient(to right, #2980b9, #3498db);
+    transform: translateY(-3px);
+}
+
+#confirmNo {
+    background-color: transparent;
+    color: #a0a0a0;
+    border: 1px solid #3a3a4a;
+}
+
+#confirmNo:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+}
+
+/* Animation for input highlight */
+@keyframes highlight-input {
+    0% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+}
+
+.input-highlight {
+    animation: highlight-input 1s ease-in-out;
+}
+
+/* Animation for shake */
+.code-input input {
+    width: 100%;
+    padding: 18px 15px;
+    padding-right: 50px;
+    border: 2px solid #3a3a4a;
+    border-radius: 12px;
+    font-size: 22px;
+    letter-spacing: 8px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    transition: all 0.3s;
+    background-color: #2a2a3a;
+    color: #ffffff;
+}
+
+.code-input input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+}
+
+/* Updating message colors */
+#message {
+    color: #e74c3c;
+    font-size: 16px;
+    height: 24px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.timer {
+    color: #a0a0a0;
+    font-size: 16px;
+    margin-top: 25px;
+    font-weight: 500;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+.code-input::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%237f8c8d" viewBox="0 0 16 16"><path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>');
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(to right, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+button:hover {
+    background: linear-gradient(to right, #2980b9, #3498db);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+}
+
+#message {
+    color: #e74c3c;
+    font-size: 16px;
+    height: 24px;
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.timer {
+    color: #7f8c8d;
+    font-size: 16px;
+    margin-top: 25px;
+    font-weight: 500;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+.back-link:hover {
+    color: #2980b9;
+    transform: translateY(-2px);
+}
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
